@@ -71,8 +71,8 @@ tailwind.config = { theme: { extend: {
 
 <script>
 /* ================= CONFIG (edit these) ================= */
-const BAKERY_WHATSAPP_NUMBER = "[03044461709]"; // digits only e.g. 923001234567
-const BAKERY_PHONE_NUMBER = "";                             // e.g. +924212345678
+const BAKERY_WHATSAPP_NUMBER = "923044461709"; // digits only e.g. 923001234567
+const BAKERY_PHONE_NUMBER = "923044461709";                             // e.g. +924212345678
 const GOOGLE_REVIEW_URL = "";                               // link to Google Business profile
 const DELIVERY_FEE = 150;
 const ADDRESS_TEXT = "381-A-II College Rd, Block A3, Block A 3 Phase 1, Johar Town, Lahore, 54770, Pakistan";
@@ -315,8 +315,8 @@ function pageGallery(){
 }
 
 function pageContact(){
-  const call = BAKERY_PHONE_NUMBER
-    ? `<a href="tel:${BAKERY_PHONE_NUMBER}" class="bg-gold text-white font-semibold px-5 py-3 rounded-full">Call Now</a>`
+const call = BAKERY_PHONE_NUMBER
+? `<a href="tel:${BAKERY_PHONE_NUMBER}" class="bg-gold text-white font-semibold px-5 py-3 rounded-full">Call Now</a>`
     : `<button onclick="alert('Phone number coming soon — please use WhatsApp to order.')" class="bg-gold/60 text-white font-semibold px-5 py-3 rounded-full">Phone number coming soon</button>`;
   const reviewBtn = GOOGLE_REVIEW_URL
     ? `<a href="${GOOGLE_REVIEW_URL}" target="_blank" rel="noopener" class="border border-brown font-semibold px-5 py-3 rounded-full">See our reviews on Google</a>` : '';
