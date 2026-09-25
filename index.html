@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fresh Inn Bakers | Bakery in Johar Town Lahore</title>
+<meta name="description" content="Fresh Inn Bakers offers fresh cakes, bakery treats, pastries and desserts in Johar Town, Lahore.">
+<meta name="keywords" content="Fresh Inn Bakers Johar Town, Fresh Inn Bakers Lahore, Bakery in Johar Town, Cakes in Johar Town Lahore, Bakery near Johar Town Lahore">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍰</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+tailwind.config = { theme: { extend: {
+  colors: { cream:'#FBF5E9', cream2:'#F2E8D5', paper:'#FFFDF8', brown:'#3A2416', brown2:'#5C3D28', gold:'#A9792C', goldl:'#D9B76A' },
+  fontFamily: { serif:['Fraunces','serif'], sans:['Work Sans','sans-serif'] }
+}}};
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Bakery","name":"Fresh Inn Bakers","address":{"@type":"PostalAddress","streetAddress":"381-A-II College Rd, Block A3, Block A 3 Phase 1","addressLocality":"Johar Town, Lahore","postalCode":"54770","addressCountry":"PK"},"openingHours":"Mo-Su 07:00-01:00"}
+</script>
+<style>
+  :root{ padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px); }
+  html{scroll-behavior:smooth}
+  body{background:#FBF5E9}
+  .wa-float{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:60}
+  input:focus,select:focus,textarea:focus,button:focus-visible,a:focus-visible{outline:3px solid #D9B76A;outline-offset:2px}
+  ::-webkit-scrollbar{height:6px}
+  @media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body class="font-sans text-brown bg-cream">
+
+<header class="sticky top-0 z-50 bg-cream/90 backdrop-blur border-b border-brown/10" style="padding-top:env(safe-area-inset-top,0px)">
+  <div class="max-w-6xl mx-auto flex items-center justify-between px-5 py-3">
+    <a href="#/home" class="font-serif text-xl font-bold leading-tight">Fresh Inn Bakers<span class="block text-[10px] tracking-wide font-sans font-semibold text-gold">JOHAR TOWN, LAHORE</span></a>
+    <nav id="desktopNav" class="hidden lg:flex gap-6 text-sm font-medium">
+      <a href="#/home" class="hover:text-gold">Home</a>
+      <a href="#/menu" class="hover:text-gold">Menu</a>
+      <a href="#/cakes" class="hover:text-gold">Cakes</a>
+      <a href="#/about" class="hover:text-gold">About</a>
+      <a href="#/gallery" class="hover:text-gold">Gallery</a>
+      <a href="#/contact" class="hover:text-gold">Contact</a>
+    </nav>
+    <div class="flex items-center gap-3">
+      <a href="#/cart" class="relative p-2" aria-label="Cart">🛒<span id="cartCount" class="absolute -top-1 -right-1 bg-gold text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">0</span></a>
+      <a href="#/menu" class="hidden sm:inline-flex bg-gold text-white text-sm font-semibold px-4 py-2 rounded-full">Order Now</a>
+      <button id="menuToggle" class="lg:hidden text-2xl" aria-label="Toggle menu">☰</button>
+    </div>
+  </div>
+  <nav id="mobileNav" class="hidden lg:hidden flex-col gap-4 px-5 pb-5 text-sm font-medium">
+    <a href="#/home">Home</a><a href="#/menu">Menu</a><a href="#/cakes">Cakes</a><a href="#/about">About</a><a href="#/gallery">Gallery</a><a href="#/contact">Contact</a>
+  </nav>
+</header>
+
+<main id="app" class="min-h-[60vh]"></main>
+
+<footer class="bg-brown text-cream2 mt-10">
+  <div class="max-w-6xl mx-auto px-5 py-10 flex flex-wrap justify-between gap-6">
+    <div><div class="font-serif text-lg font-bold text-cream">Fresh Inn Bakers</div><p class="text-goldl text-sm mt-1">Freshly Baked. Made With Love.</p></div>
+    <div class="flex gap-5 flex-wrap text-sm">
+      <a href="#/home" class="hover:text-goldl">Home</a><a href="#/menu" class="hover:text-goldl">Menu</a><a href="#/cakes" class="hover:text-goldl">Cakes</a><a href="#/gallery" class="hover:text-goldl">Gallery</a><a href="#/contact" class="hover:text-goldl">Contact</a>
+    </div>
+  </div>
+  <div class="border-t border-cream/15 text-center text-xs py-4 opacity-70">© 2026 Fresh Inn Bakers. All rights reserved.</div>
+</footer>
+
+<a id="waFloat" class="wa-float w-14 h-14 rounded-full bg-[#25D366] flex items-center justify-center text-2xl shadow-lg" href="#" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">💬</a>
+
+<script>
+/* ================= CONFIG (edit these) ================= */
+const BAKERY_WHATSAPP_NUMBER = "[BAKERY_WHATSAPP_NUMBER]"; // digits only e.g. 923001234567
+const BAKERY_PHONE_NUMBER = "";                             // e.g. +924212345678
+const GOOGLE_REVIEW_URL = "";                               // link to Google Business profile
+const DELIVERY_FEE = 150;
+const ADDRESS_TEXT = "381-A-II College Rd, Block A3, Block A 3 Phase 1, Johar Town, Lahore, 54770, Pakistan";
+const MAPS_DIRECTIONS_URL = "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent(ADDRESS_TEXT);
+
+/* ================= SUPABASE CONFIG ================= */
+const SUPABASE_URL = "YOUR_SUPABASE_PROJECT_URL";
+const SUPABASE_PUBLISHABLE_KEY = "YOUR_SUPABASE_PUBLISHABLE_KEY";
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+
+/* ================= PRODUCT DATA (fallback until Supabase is configured) ================= */
+let PRODUCTS = [
+  {id:'c1',name:'Classic Chocolate Cake',desc:'Rich chocolate sponge — sample item',price:1200,category:'Cakes',popular:true,available:true},
+  {id:'c2',name:'Fresh Cream Cake',desc:'Light cream layers — sample item',price:1400,category:'Cakes',popular:true,available:true},
+  {id:'c3',name:'Red Velvet Cake',desc:'Sample item',price:1600,category:'Cakes',popular:false,available:true},
+  {id:'p1',name:'Fruit Pastry',desc:'Sample item',price:150,category:'Pastries',popular:true,available:true},
+  {id:'p2',name:'Chocolate Pastry',desc:'Sample item',price:150,category:'Pastries',popular:false,available:true},
+  {id:'b1',name:'Butter Cookies (box)',desc:'Sample item',price:400,category:'Biscuits & Cookies',popular:false,available:true},
+  {id:'b2',name:'Assorted Biscuits',desc:'Sample item',price:350,category:'Biscuits & Cookies',popular:false,available:true},
+  {id:'br1',name:'Sliced Bread',desc:'Sample item',price:180,category:'Breads',popular:true,available:true},
+  {id:'br2',name:'Bun Pack',desc:'Sample item',price:150,category:'Breads',popular:false,available:false},
+  {id:'d1',name:'Trifle Pudding',desc:'Sample item',price:300,category:'Desserts',popular:false,available:true},
+  {id:'d2',name:'Fruit Tart',desc:'Sample item',price:250,category:'Desserts',popular:false,available:true},
+  {id:'s1',name:'Chicken Patties (6pc)',desc:'Sample item',price:500,category:'Snacks',popular:true,available:true},
+  {id:'s2',name:'Vegetable Rolls',desc:'Sample item',price:300,category:'Snacks',popular:false,available:true},
+  {id:'sw1',name:'Assorted Sweets Box',desc:'Sample item',price:600,category:'Sweets',popular:false,available:true},
+  {id:'bv1',name:'Soft Drink 500ml',desc:'Sample item',price:120,category:'Beverages',popular:false,available:true},
+  {id:'bv2',name:'Fresh Juice',desc:'Sample item',price:250,category:'Beverages',popular:false,available:true},
+];
+let CATEGORIES = [...new Set(PRODUCTS.map(p=>p.category))];
+
+async function loadProductsFromSupabase(){
+  if(SUPABASE_URL.startsWith('YOUR_') || SUPABASE_PUBLISHABLE_KEY.startsWith('YOUR_')) return;
+  const { data, error } = await supabaseClient.from('products').select('*').order('created_at',{ascending:false});
+  if(error){ console.warn('Supabase products:', error.message); return; }
+  if(Array.isArray(data) && data.length){ PRODUCTS = data.map(p => ({
+    id:p.id, name:p.name, desc:p.description || '', price:Number(p.price || 0), category:p.category || 'Other',
+    popular:!!p.popular, featured:!!p.featured, available:!!p.available, image:p.image_url || '',
+    discount:Number(p.discount_percent || 0), stock:Number(p.stock_quantity || 0)
+  })); CATEGORIES = [...new Set(PRODUCTS.map(p=>p.category))]; render(); }
+}
+const CAKE_TILES = ['Birthday Cakes','Chocolate Cakes','Cream Cakes','Customized Cakes','Celebration Cakes'];
+const GALLERY_TILES = ['Cakes','Pastries','Bakery items','Store interior','Desserts','More photos'];
+
+/* ================= STATE ================= */
+let cart = JSON.parse(localStorage.getItem('fib_cart') || '[]');
+let lastOrder = JSON.parse(sessionStorage.getItem('fib_last_order') || 'null');
+function saveCart(){ localStorage.setItem('fib_cart', JSON.stringify(cart)); updateCartCount(); }
+function updateCartCount(){ document.getElementById('cartCount').textContent = cart.reduce((s,i)=>s+i.qty,0); }
+function addToCart(id, qty){
+  qty = qty || 1;
+  const existing = cart.find(i=>i.id===id);
+  if(existing){ existing.qty += qty; } else {
+    const p = PRODUCTS.find(p=>p.id===id);
+    cart.push({id:p.id,name:p.name,price:p.price,qty});
+  }
+  saveCart(); render();
+}
+function changeQty(id, delta){
+  const item = cart.find(i=>i.id===id); if(!item) return;
+  item.qty += delta;
+  if(item.qty <= 0) cart = cart.filter(i=>i.id!==id);
+  saveCart(); render();
+}
+function removeFromCart(id){ cart = cart.filter(i=>i.id!==id); saveCart(); render(); }
+function clearCart(){ cart = []; saveCart(); render(); }
+function cartSubtotal(){ return cart.reduce((s,i)=>s+i.price*i.qty,0); }
+
+function waLink(message){ return `https://wa.me/${BAKERY_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`; }
+function esc(s){ return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+/* ================= OPEN/CLOSED (Asia/Karachi) ================= */
+function getKarachiHourMinute(){
+  const parts = new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Karachi',hour:'2-digit',minute:'2-digit',hour12:false}).formatToParts(new Date());
+  const h = parseInt(parts.find(p=>p.type==='hour').value,10);
+  const m = parseInt(parts.find(p=>p.type==='minute').value,10);
+  return {h,m};
+}
+function statusBadge(){
+  const {h} = getKarachiHourMinute();
+  const isOpen = h >= 7 || h < 1;
+  const cls = isOpen ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800';
+  const label = isOpen ? '🟢 Open Now' : '🔴 Closed Now';
+  const sub = isOpen ? 'Open today until 1:00 AM' : 'Opens today at 7:00 AM';
+  return `<div class="inline-flex flex-col gap-1"><span class="inline-block ${cls} text-sm font-semibold px-3 py-1 rounded-full w-fit">${label}</span><span class="text-xs text-brown2">${sub}</span></div>`;
+}
+
+/* ================= PAGE RENDERERS ================= */
+function productCard(p){
+  const finalPrice = p.discount ? Math.round(p.price * (1 - p.discount/100)) : p.price;
+  const image = p.image ? `<img src="${esc(p.image)}" alt="${esc(p.name)}" class="w-full h-full object-cover" loading="lazy">`
+                        : `<div class="w-full h-full bg-gradient-to-br from-cream2 to-goldl flex items-center justify-center text-4xl">🍰</div>`;
+  return `<div class="bg-paper border border-brown/10 rounded-2xl overflow-hidden flex flex-col shadow-sm">
+    <div class="aspect-[4/3] overflow-hidden relative">${image}${p.discount ? `<span class="absolute top-3 left-3 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full">${p.discount}% OFF</span>` : ''}</div>
+    <div class="p-4 flex flex-col gap-1 flex-1">
+      <h3 class="font-semibold">${esc(p.name)}</h3>
+      <p class="text-sm text-brown2 flex-1">${esc(p.desc)}</p>
+      ${!p.available ? '<span class="text-xs font-semibold text-red-600">Currently unavailable</span>' : ''}
+      <div class="flex items-center justify-between mt-2">
+        <span class="font-semibold text-gold">Rs. ${finalPrice.toLocaleString()}${p.discount ? ` <del class="text-xs text-gray-500">Rs. ${p.price.toLocaleString()}</del>` : ''}</span>
+        <div class="flex items-center gap-2">
+          <input type="number" min="1" value="1" id="qty-${p.id}" class="w-14 border border-brown/20 rounded-lg px-2 py-1 text-sm" ${!p.available?'disabled':''}>
+          <button ${!p.available?'disabled':''} onclick="addToCart('${p.id}', parseInt(document.getElementById('qty-${p.id}').value)||1)" class="bg-brown text-cream text-sm font-semibold px-3 py-2 rounded-full disabled:opacity-40">Add</button>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function pageHome(){
+  return `
+  <section class="max-w-6xl mx-auto px-5 pt-12 pb-8 grid lg:grid-cols-2 gap-10 items-center">
+    <div>
+      <h1 class="font-serif text-4xl sm:text-5xl font-bold leading-tight">Freshly Baked.<br>Made With Love.</h1>
+      <p class="text-brown2 mt-4 max-w-md">Delicious cakes, fresh bakery treats and everyday favorites — freshly prepared for you in Johar Town, Lahore.</p>
+      <div class="flex flex-wrap gap-4 mt-6">
+        <a href="#/menu" class="bg-gold text-white font-semibold px-6 py-3 rounded-full">Order Now</a>
+        <a href="#/menu" class="border border-brown font-semibold px-6 py-3 rounded-full">Explore Menu</a>
+      </div>
+      <div class="flex flex-wrap gap-5 mt-8 text-sm text-brown2">
+        <span>📍 Johar Town, Lahore</span><span>🕐 7 AM – 1 AM</span>
+      </div>
+      <div class="mt-4">${statusBadge()}</div>
+    </div>
+    <div class="aspect-[4/5] rounded-3xl bg-gradient-to-br from-gold to-brown2 flex items-center justify-center text-8xl text-white shadow-xl">🎂</div>
+  </section>
+  <section class="max-w-6xl mx-auto px-5 py-10">
+    <h2 class="font-serif text-2xl font-semibold mb-4">Popular right now</h2>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">${PRODUCTS.filter(p=>p.popular).map(productCard).join('')}</div>
+  </section>`;
+}
+
+function pageMenu(){
+  setTimeout(bindMenuControls, 0);
+  return `
+  <section class="max-w-6xl mx-auto px-5 pt-10 pb-16">
+    <h1 class="font-serif text-3xl font-bold mb-2">Our Menu</h1>
+    <p class="text-brown2 mb-6">Fresh products and prices are updated from our store.</p>
+    <div class="flex flex-wrap gap-3 mb-6">
+      <input id="mSearch" type="text" placeholder="Search products..." class="border border-brown/20 rounded-full px-4 py-2 text-sm flex-1 min-w-[180px]">
+      <select id="mCategory" class="border border-brown/20 rounded-full px-4 py-2 text-sm"><option value="">All categories</option>${CATEGORIES.map(c=>`<option value="${c}">${c}</option>`).join('')}</select>
+      <select id="mSort" class="border border-brown/20 rounded-full px-4 py-2 text-sm">
+        <option value="default">Sort: default</option>
+        <option value="priceAsc">Price: low to high</option>
+        <option value="priceDesc">Price: high to low</option>
+        <option value="popular">Popular first</option>
+      </select>
+      <label class="flex items-center gap-2 text-sm border border-brown/20 rounded-full px-4 py-2"><input id="mAvail" type="checkbox"> In stock only</label>
+    </div>
+    <div id="menuResults" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+  </section>`;
+}
+function bindMenuControls(){
+  const search = document.getElementById('mSearch'), cat = document.getElementById('mCategory'), sort = document.getElementById('mSort'), avail = document.getElementById('mAvail');
+  function run(){
+    let list = PRODUCTS.filter(p =>
+      (!search.value || p.name.toLowerCase().includes(search.value.toLowerCase())) &&
+      (!cat.value || p.category === cat.value) &&
+      (!avail.checked || p.available)
+    );
+    if(sort.value==='priceAsc') list.sort((a,b)=>a.price-b.price);
+    if(sort.value==='priceDesc') list.sort((a,b)=>b.price-a.price);
+    if(sort.value==='popular') list.sort((a,b)=>(b.popular?1:0)-(a.popular?1:0));
+    document.getElementById('menuResults').innerHTML = list.length ? list.map(productCard).join('') : '<p class="text-brown2 col-span-full">No products match your filters.</p>';
+  }
+  [search,cat,sort,avail].forEach(el=>el.addEventListener('input', run));
+  run();
+}
+
+function pageCakes(){
+  return `
+  <section class="max-w-6xl mx-auto px-5 pt-10 pb-4">
+    <h1 class="font-serif text-3xl font-bold mb-2">Cakes for every celebration</h1>
+    <p class="text-brown2 mb-6">From everyday birthdays to fully customized designs.</p>
+    <div class="grid grid-cols-2 sm:grid-cols-5 gap-4 mb-10">
+      ${CAKE_TILES.map(t=>`<div class="aspect-square bg-paper border border-brown/10 rounded-2xl flex items-center justify-center text-center p-3 font-semibold text-sm">${t}</div>`).join('')}
+    </div>
+  </section>
+  <section class="max-w-2xl mx-auto px-5 pb-16">
+    <div class="bg-paper border border-brown/10 rounded-2xl p-6 sm:p-8 shadow-sm">
+      <h2 class="font-serif text-xl font-semibold mb-1">Request a Custom Cake</h2>
+      <p class="text-brown2 text-sm mb-5">Fill this in and we'll confirm details over WhatsApp. Sizes/flavors below are examples — update to match what you actually offer.</p>
+      <form id="cakeForm" class="space-y-4" novalidate>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div><label class="text-sm font-semibold block mb-1">Name *</label><input required name="name" class="w-full border border-brown/20 rounded-lg px-3 py-2"></div>
+          <div><label class="text-sm font-semibold block mb-1">Phone *</label><input required name="phone" type="tel" class="w-full border border-brown/20 rounded-lg px-3 py-2"></div>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div><label class="text-sm font-semibold block mb-1">Cake Type</label><input name="type" placeholder="e.g. Chocolate, Red Velvet" class="w-full border border-brown/20 rounded-lg px-3 py-2"></div>
+          <div><label class="text-sm font-semibold block mb-1">Cake Size</label>
+            <select name="size" class="w-full border border-brown/20 rounded-lg px-3 py-2">
+              <option>1 Pound</option><option>2 Pound</option><option>3 Pound</option><option>4 Pound</option><option>5+ Pound</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div><label class="text-sm font-semibold block mb-1">Flavor</label><input name="flavor" class="w-full border border-brown/20 rounded-lg px-3 py-2"></div>
+          <div><label class="text-sm font-semibold block mb-1">Message on Cake</label><input name="message" class="w-full border border-brown/20 rounded-lg px-3 py-2"></div>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div><label class="text-sm font-semibold block mb-1">Preferred Date</label><input name="date" type="date" class="w-full border border-brown/20 rounded-lg px-3 py-2"></div>
+          <div><label class="text-sm font-semibold block mb-1">Preferred Time</label><input name="time" type="time" class="w-full border border-brown/20 rounded-lg px-3 py-2"></div>
+        </div>
+        <div><label class="text-sm font-semibold block mb-1">Additional Requirements</label><textarea name="notes" class="w-full border border-brown/20 rounded-lg px-3 py-2" rows="3"></textarea></div>
+        <p id="cakeError" class="text-sm text-red-600 hidden">Please fill in your name and phone number.</p>
+        <button type="submit" class="w-full bg-gold text-white font-semibold py-3 rounded-full">Request Custom Cake</button>
+      </form>
+    </div>
+  </section>`;
+}
+function bindCakeForm(){
+  const form = document.getElementById('cakeForm'); if(!form) return;
+  form.addEventListener('submit', e=>{
+    e.preventDefault();
+    const f = new FormData(form);
+    const name=f.get('name'), phone=f.get('phone');
+    if(!name || !phone){ document.getElementById('cakeError').classList.remove('hidden'); return; }
+    document.getElementById('cakeError').classList.add('hidden');
+    const msg = `Assalam o Alaikum Fresh Inn Bakers, I would like to request a custom cake.\n\nName: ${name}\nPhone: ${phone}\nCake Type: ${f.get('type')||'-'}\nSize: ${f.get('size')}\nFlavor: ${f.get('flavor')||'-'}\nMessage on Cake: ${f.get('message')||'-'}\nPreferred Date: ${f.get('date')||'-'}\nPreferred Time: ${f.get('time')||'-'}\nAdditional Requirements: ${f.get('notes')||'-'}`;
+    window.open(waLink(msg), '_blank');
+  });
+}
+
+function pageAbout(){
+  return `<section class="max-w-3xl mx-auto px-5 py-14">
+    <h1 class="font-serif text-3xl font-bold mb-4">About Fresh Inn Bakers</h1>
+    <p class="text-brown2 leading-relaxed">Fresh Inn Bakers is a neighbourhood bakery in Johar Town, Lahore, offering fresh cakes, pastries, breads and everyday treats. Whether you're picking up a quick snack or ordering a cake for a celebration, our menu is prepared for customers across the day.</p>
+    <p class="text-brown2 leading-relaxed mt-4">We're open long hours — 7:00 AM to 1:00 AM, every day — so you can find something fresh whenever you need it.</p>
+  </section>`;
+}
+
+function pageGallery(){
+  return `<section class="max-w-6xl mx-auto px-5 py-14">
+    <h1 class="font-serif text-3xl font-bold mb-2">Gallery</h1>
+    <p class="text-brown2 mb-6">Placeholder tiles below — replace with real photos of your cakes, pastries and store.</p>
+    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+      ${GALLERY_TILES.map(t=>`<div class="aspect-square rounded-2xl border border-dashed border-brown/25 bg-gradient-to-br from-cream2 to-goldl flex items-center justify-center text-sm text-brown2 text-center p-3">${t} photo</div>`).join('')}
+    </div>
+  </section>`;
+}
+
+function pageContact(){
+  const call = BAKERY_PHONE_NUMBER
+    ? `<a href="tel:${BAKERY_PHONE_NUMBER}" class="bg-gold text-white font-semibold px-5 py-3 rounded-full">Call Now</a>`
+    : `<button onclick="alert('Phone number coming soon — please use WhatsApp to order.')" class="bg-gold/60 text-white font-semibold px-5 py-3 rounded-full">Phone number coming soon</button>`;
+  const reviewBtn = GOOGLE_REVIEW_URL
+    ? `<a href="${GOOGLE_REVIEW_URL}" target="_blank" rel="noopener" class="border border-brown font-semibold px-5 py-3 rounded-full">See our reviews on Google</a>` : '';
+  return `<section class="max-w-6xl mx-auto px-5 py-14 grid lg:grid-cols-2 gap-8">
+    <div class="bg-paper border border-brown/10 rounded-2xl p-6 sm:p-8">
+      ${statusBadge()}
+      <div class="mt-5 space-y-4 text-sm">
+        <div><strong>Fresh Inn Bakers</strong><br>${esc(ADDRESS_TEXT)}</div>
+        <div>🕐 Every day, 7:00 AM – 1:00 AM</div>
+      </div>
+      <div class="flex flex-wrap gap-3 mt-6">
+        ${call}
+        <a id="waContact" href="#" target="_blank" rel="noopener" class="border border-brown font-semibold px-5 py-3 rounded-full">WhatsApp Us</a>
+        <a href="${MAPS_DIRECTIONS_URL}" target="_blank" rel="noopener" class="border border-brown font-semibold px-5 py-3 rounded-full">Get Directions</a>
+        ${reviewBtn}
+      </div>
+    </div>
+    <div class="rounded-2xl overflow-hidden border border-brown/10 min-h-[320px]">
+      <iframe class="w-full h-full min-h-[320px]" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q=${encodeURIComponent(ADDRESS_TEXT)}&output=embed" title="Fresh Inn Bakers location map"></iframe>
+    </div>
+  </section>`;
+}
+
+function pageCart(){
+  if(!cart.length){
+    return `<section class="max-w-2xl mx-auto px-5 py-16 text-center">
+      <h1 class="font-serif text-2xl font-bold mb-3">Your cart is empty</h1>
+      <p class="text-brown2 mb-6">Add something delicious from the menu.</p>
+      <a href="#/menu" class="bg-gold text-white font-semibold px-6 py-3 rounded-full">Browse Menu</a>
+    </section>`;
+  }
+  const sub = cartSubtotal();
+  return `<section class="max-w-2xl mx-auto px-5 py-12">
+    <h1 class="font-serif text-2xl font-bold mb-6">Your Cart</h1>
+    <div class="space-y-3">
+      ${cart.map(i=>`<div class="flex items-center justify-between bg-paper border border-brown/10 rounded-xl p-4">
+        <div><div class="font-semibold">${esc(i.name)}</div><div class="text-sm text-brown2">Rs. ${i.price.toLocaleString()} each</div></div>
+        <div class="flex items-center gap-3">
+          <button onclick="changeQty('${i.id}',-1)" class="w-8 h-8 rounded-full border border-brown/30">-</button>
+          <span>${i.qty}</span>
+          <button onclick="changeQty('${i.id}',1)" class="w-8 h-8 rounded-full border border-brown/30">+</button>
+          <button onclick="removeFromCart('${i.id}')" class="text-red-600 text-sm ml-2">Remove</button>
+        </div>
+      </div>`).join('')}
+    </div>
+    <div class="mt-6 bg-paper border border-brown/10 rounded-xl p-5 space-y-2 text-sm">
+      <div class="flex justify-between"><span>Subtotal</span><span>Rs. ${sub.toLocaleString()}</span></div>
+      <div class="flex justify-between text-brown2"><span>Delivery fee (if delivery)</span><span>Rs. ${DELIVERY_FEE.toLocaleString()}</span></div>
+      <div class="flex justify-between font-semibold text-base pt-2 border-t border-brown/10"><span>Total (pickup)</span><span>Rs. ${sub.toLocaleString()}</span></div>
+    </div>
+    <div class="flex gap-3 mt-6">
+      <button onclick="clearCart()" class="border border-brown font-semibold px-5 py-3 rounded-full">Clear Cart</button>
+      <a href="#/checkout" class="flex-1 text-center bg-gold text-white font-semibold px-5 py-3 rounded-full">Checkout</a>
+    </div>
+  </section>`;
+}
+
+function pageCheckout(){
+  if(!cart.length) return `<section class="max-w-xl mx-auto px-5 py-16 text-center"><h1 class="font-serif text-2xl font-bold mb-3">Your cart is empty</h1><a href="#/menu" class="bg-gold text-white font-semibold px-6 py-3 rounded-full">Browse Menu</a></section>`;
+  setTimeout(bindCheckout, 0);
+  const sub = cartSubtotal();
+  return `<section class="max-w-xl mx-auto px-5 py-12">
+    <h1 class="font-serif text-2xl font-bold mb-6">Checkout</h1>
+    <form id="checkoutForm" novalidate class="bg-paper border border-brown/10 rounded-2xl p-6 space-y-4">
+      <div><label class="text-sm font-semibold block mb-1">Full Name *</label><input required name="name" class="w-full border border-brown/20 rounded-lg px-3 py-2"></div>
+      <div><label class="text-sm font-semibold block mb-1">Phone Number *</label><input required name="phone" type="tel" class="w-full border border-brown/20 rounded-lg px-3 py-2"></div>
+      <div>
+        <label class="text-sm font-semibold block mb-1">Order Type *</label>
+        <div class="flex gap-4 text-sm">
+          <label class="flex items-center gap-2"><input type="radio" name="orderType" value="Pickup" checked> Pickup</label>
+          <label class="flex items-center gap-2"><input type="radio" name="orderType" value="Delivery"> Delivery</label>
+        </div>
+      </div>
+      <div id="addressField" class="hidden"><label class="text-sm font-semibold block mb-1">Delivery Address *</label><textarea name="address" class="w-full border border-brown/20 rounded-lg px-3 py-2" rows="2"></textarea></div>
+      <div><label class="text-sm font-semibold block mb-1">Special Instructions</label><textarea name="notes" class="w-full border border-brown/20 rounded-lg px-3 py-2" rows="2"></textarea></div>
+      <p id="checkoutError" class="text-sm text-red-600 hidden"></p>
+      <div class="bg-cream rounded-lg p-4 text-sm space-y-1">
+        <div class="flex justify-between"><span>Subtotal</span><span>Rs. ${sub.toLocaleString()}</span></div>
+        <div class="flex justify-between" id="ckDeliveryRow" style="display:none"><span>Delivery fee</span><span>Rs. ${DELIVERY_FEE.toLocaleString()}</span></div>
+        <div class="flex justify-between font-semibold pt-1 border-t border-brown/10"><span>Total</span><span id="ckTotal">Rs. ${sub.toLocaleString()}</span></div>
+      </div>
+      <button type="submit" class="w-full bg-gold text-white font-semibold py-3 rounded-full">Send Order on WhatsApp</button>
+    </form>
+  </section>`;
+}
+function bindCheckout(){
+  const form = document.getElementById('checkoutForm'); if(!form) return;
+  const addressField = document.getElementById('addressField');
+  const deliveryRow = document.getElementById('ckDeliveryRow');
+  const totalEl = document.getElementById('ckTotal');
+  const sub = cartSubtotal();
+  function syncType(){
+    const type = form.orderType.value;
+    if(type==='Delivery'){ addressField.classList.remove('hidden'); form.address.required = true; deliveryRow.style.display='flex'; totalEl.textContent = 'Rs. ' + (sub+DELIVERY_FEE).toLocaleString(); }
+    else { addressField.classList.add('hidden'); form.address.required = false; deliveryRow.style.display='none'; totalEl.textContent = 'Rs. ' + sub.toLocaleString(); }
+  }
+  form.querySelectorAll('input[name=orderType]').forEach(r=>r.addEventListener('change', syncType));
+  syncType();
+  form.addEventListener('submit', e=>{
+    e.preventDefault();
+    const f = new FormData(form);
+    const name=f.get('name'), phone=f.get('phone'), type=f.get('orderType'), address=f.get('address'), notes=f.get('notes');
+    const err = document.getElementById('checkoutError');
+    if(!name || !phone || (type==='Delivery' && !address)){
+      err.textContent = 'Please fill in all required fields' + (type==='Delivery' ? ' including delivery address.' : '.');
+      err.classList.remove('hidden'); return;
+    }
+    err.classList.add('hidden');
+    const total = type==='Delivery' ? sub+DELIVERY_FEE : sub;
+    const orderNumber = 'FIB-' + Date.now().toString().slice(-6);
+    const itemsText = cart.map(i=>`${i.name} x${i.qty}`).join('\n');
+    const msg = `Assalam o Alaikum Fresh Inn Bakers, I want to place an order.\n\nOrder #: ${orderNumber}\nCustomer: ${name}\nPhone: ${phone}\n\nOrder:\n${itemsText}\n\nOrder Type: ${type}\n${type==='Delivery' ? 'Address: '+address+'\n' : ''}Special Instructions: ${notes || '-'}\n\nTotal: Rs. ${total.toLocaleString()}`;
+    lastOrder = {orderNumber, name, total, type, items: cart.map(i=>({name:i.name,qty:i.qty}))};
+    sessionStorage.setItem('fib_last_order', JSON.stringify(lastOrder));
+    window.open(waLink(msg), '_blank');
+    cart = []; saveCart();
+    location.hash = '#/confirmation';
+  });
+}
+
+function pageConfirmation(){
+  if(!lastOrder) return `<section class="max-w-xl mx-auto px-5 py-16 text-center"><h1 class="font-serif text-2xl font-bold mb-3">No recent order found</h1><a href="#/menu" class="bg-gold text-white font-semibold px-6 py-3 rounded-full">Browse Menu</a></section>`;
+  return `<section class="max-w-xl mx-auto px-5 py-16 text-center">
+    <div class="text-5xl mb-4">✅</div>
+    <h1 class="font-serif text-2xl font-bold mb-2">Order Request Sent!</h1>
+    <p class="text-brown2 mb-6">Your order request has been prepared. Please confirm your order with Fresh Inn Bakers through WhatsApp.</p>
+    <div class="bg-paper border border-brown/10 rounded-2xl p-6 text-left text-sm space-y-2 mb-6">
+      <div class="flex justify-between"><span>Order Number</span><strong>${lastOrder.orderNumber}</strong></div>
+      <div class="flex justify-between"><span>Customer</span><strong>${esc(lastOrder.name)}</strong></div>
+      <div class="flex justify-between"><span>Order Type</span><strong>${lastOrder.type}</strong></div>
+      <div class="flex justify-between"><span>Order Total</span><strong>Rs. ${lastOrder.total.toLocaleString()}</strong></div>
+      <div class="pt-2 border-t border-brown/10"><span class="font-semibold">Items</span><ul class="list-disc ml-5 mt-1">${lastOrder.items.map(i=>`<li>${esc(i.name)} x${i.qty}</li>`).join('')}</ul></div>
+    </div>
+    <div class="flex gap-3 justify-center flex-wrap">
+      <a href="#/menu" class="border border-brown font-semibold px-5 py-3 rounded-full">Continue Shopping</a>
+      <a href="${waLink('Hi Fresh Inn Bakers, following up on order '+lastOrder.orderNumber)}" target="_blank" rel="noopener" class="bg-gold text-white font-semibold px-5 py-3 rounded-full">Contact Bakery</a>
+    </div>
+  </section>`;
+}
+
+/* ================= ROUTER ================= */
+const ROUTES = { home:pageHome, menu:pageMenu, cakes:pageCakes, about:pageAbout, gallery:pageGallery, contact:pageContact, cart:pageCart, checkout:pageCheckout, confirmation:pageConfirmation };
+function render(){
+  const route = (location.hash.replace('#/','') || 'home').split('?')[0];
+  const fn = ROUTES[route] || pageHome;
+  document.getElementById('app').innerHTML = fn();
+  document.getElementById('mobileNav').classList.add('hidden');
+  window.scrollTo({top:0});
+  updateCartCount();
+  bindCakeForm();
+  const waMsg = 'Hi Fresh Inn Bakers, I would like to inquire about your products.';
+  document.getElementById('waFloat').href = waLink(waMsg);
+  const waContact = document.getElementById('waContact'); if(waContact) waContact.href = waLink(waMsg);
+}
+window.addEventListener('hashchange', render);
+document.getElementById('menuToggle').addEventListener('click', ()=>document.getElementById('mobileNav').classList.toggle('hidden'));
+setInterval(()=>{ if((location.hash.replace('#/','')||'home')==='home' || (location.hash.replace('#/','')||'')==='contact') render(); }, 60000);
+render();
+</script>
+</body>
+</html>
