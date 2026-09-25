@@ -6,181 +6,975 @@
 <title>Fresh Inn Bakers — Admin</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<style>body{background:#fbf5e9} input,select,textarea{outline:none} .modal{background:rgba(0,0,0,.45)}</style>
+<style>
+body{background:#fbf5e9}
+input,select,textarea{outline:none}
+.modal{background:rgba(0,0,0,.45)}
+</style>
 </head>
+
 <body class="text-[#3A2416]">
+
 <div id="login" class="min-h-screen grid place-items-center p-5">
   <div class="bg-white rounded-3xl shadow-xl p-7 w-full max-w-md">
     <h1 class="text-2xl font-bold">Fresh Inn Bakers</h1>
     <p class="text-sm text-gray-500 mb-6">Admin Panel</p>
+
     <form id="loginForm" class="space-y-4">
-      <input id="email" type="email" required placeholder="Admin email" class="w-full border rounded-xl px-4 py-3">
-      <input id="password" type="password" required placeholder="Password" class="w-full border rounded-xl px-4 py-3">
-      <button class="w-full bg-[#3A2416] text-white rounded-xl py-3 font-semibold">Login</button>
+      <input id="email" type="email" required placeholder="Admin email"
+        class="w-full border rounded-xl px-4 py-3">
+
+      <input id="password" type="password" required placeholder="Password"
+        class="w-full border rounded-xl px-4 py-3">
+
+      <button class="w-full bg-[#3A2416] text-white rounded-xl py-3 font-semibold">
+        Login
+      </button>
+
       <p id="loginError" class="text-red-600 text-sm"></p>
     </form>
   </div>
 </div>
 
 <div id="panel" class="hidden min-h-screen">
+
 <header class="bg-[#3A2416] text-white px-5 py-4 flex justify-between items-center">
-  <div><b>Fresh Inn Bakers</b><span class="text-xs ml-2 opacity-70">Admin</span></div>
-  <div class="flex gap-2"><a href="/" class="bg-white/10 px-3 py-2 rounded-lg">Website</a><button id="logout" class="bg-white/10 px-3 py-2 rounded-lg">Logout</button></div>
+  <div>
+    <b>Fresh Inn Bakers</b>
+    <span class="text-xs ml-2 opacity-70">Admin</span>
+  </div>
+
+  <div class="flex gap-2">
+    <a href="/" class="bg-white/10 px-3 py-2 rounded-lg">Website</a>
+    <button id="logout" class="bg-white/10 px-3 py-2 rounded-lg">
+      Logout
+    </button>
+  </div>
 </header>
+
 <main class="max-w-7xl mx-auto p-5">
-  <div class="grid sm:grid-cols-4 gap-4 mb-6">
-    <div class="bg-white rounded-2xl p-4"><div class="text-xs text-gray-500">Products</div><b id="sProducts" class="text-2xl">0</b></div>
-    <div class="bg-white rounded-2xl p-4"><div class="text-xs text-gray-500">Categories</div><b id="sCats" class="text-2xl">0</b></div>
-    <div class="bg-white rounded-2xl p-4"><div class="text-xs text-gray-500">In stock</div><b id="sStock" class="text-2xl">0</b></div>
-    <div class="bg-white rounded-2xl p-4"><div class="text-xs text-gray-500">Orders</div><b id="sOrders" class="text-2xl">0</b></div>
-  </div>
 
-  <div class="bg-white rounded-2xl p-4 mb-5 flex flex-wrap gap-3">
-    <input id="search" placeholder="Search products..." class="border rounded-xl px-4 py-2 flex-1 min-w-[200px]">
-    <select id="filterCat" class="border rounded-xl px-4 py-2"><option value="">All categories</option></select>
-    <button id="addBtn" class="bg-[#A9792C] text-white px-5 py-2 rounded-xl font-semibold">+ Add Product</button>
-    <button id="refreshBtn" class="border px-4 py-2 rounded-xl">Refresh</button>
-  </div>
+<div class="grid sm:grid-cols-4 gap-4 mb-6">
 
-  <div class="bg-white rounded-2xl overflow-hidden">
-    <div class="overflow-auto">
-      <table class="w-full text-sm">
-        <thead class="bg-gray-50"><tr><th class="text-left p-4">Product</th><th class="text-left p-4">Category</th><th class="text-left p-4">Price</th><th class="text-left p-4">Stock</th><th class="text-left p-4">Status</th><th class="text-right p-4">Actions</th></tr></thead>
-        <tbody id="rows"></tbody>
-      </table>
-    </div>
-  </div>
+<div class="bg-white rounded-2xl p-4">
+<div class="text-xs text-gray-500">Products</div>
+<b id="sProducts" class="text-2xl">0</b>
+</div>
+
+<div class="bg-white rounded-2xl p-4">
+<div class="text-xs text-gray-500">Categories</div>
+<b id="sCats" class="text-2xl">0</b>
+</div>
+
+<div class="bg-white rounded-2xl p-4">
+<div class="text-xs text-gray-500">In stock</div>
+<b id="sStock" class="text-2xl">0</b>
+</div>
+
+<div class="bg-white rounded-2xl p-4">
+<div class="text-xs text-gray-500">Orders</div>
+<b id="sOrders" class="text-2xl">0</b>
+</div>
+
+</div>
+
+<div class="bg-white rounded-2xl p-4 mb-5 flex flex-wrap gap-3">
+
+<input id="search"
+placeholder="Search products..."
+class="border rounded-xl px-4 py-2 flex-1 min-w-[200px]">
+
+<select id="filterCat"
+class="border rounded-xl px-4 py-2">
+<option value="">All categories</option>
+</select>
+
+<button id="addBtn"
+class="bg-[#A9792C] text-white px-5 py-2 rounded-xl font-semibold">
++ Add Product
+</button>
+
+<button id="refreshBtn"
+class="border px-4 py-2 rounded-xl">
+Refresh
+</button>
+
+</div>
+
+<div class="bg-white rounded-2xl overflow-hidden">
+
+<div class="overflow-auto">
+
+<table class="w-full text-sm">
+
+<thead class="bg-gray-50">
+
+<tr>
+<th class="text-left p-4">Product</th>
+<th class="text-left p-4">Category</th>
+<th class="text-left p-4">Price</th>
+<th class="text-left p-4">Stock</th>
+<th class="text-left p-4">Status</th>
+<th class="text-right p-4">Actions</th>
+</tr>
+
+</thead>
+
+<tbody id="rows"></tbody>
+
+</table>
+
+</div>
+</div>
+
 </main>
 </div>
 
-<div id="modal" class="hidden fixed inset-0 modal items-center justify-center p-4">
- <div class="bg-white rounded-3xl p-6 w-full max-w-2xl max-h-[92vh] overflow-auto">
-  <div class="flex justify-between mb-5"><h2 id="modalTitle" class="text-xl font-bold">Add Product</h2><button id="closeModal" class="text-2xl">×</button></div>
-  <form id="productForm" class="grid sm:grid-cols-2 gap-4">
-    <input type="hidden" id="id">
-    <label class="sm:col-span-2">Name<input id="name" required class="mt-1 w-full border rounded-xl px-3 py-2"></label>
-    <label>Category<select id="category" class="mt-1 w-full border rounded-xl px-3 py-2"></select></label>
-    <label>Price (Rs.)<input id="price" type="number" min="0" required class="mt-1 w-full border rounded-xl px-3 py-2"></label>
-    <label>Discount %<input id="discount" type="number" min="0" max="100" value="0" class="mt-1 w-full border rounded-xl px-3 py-2"></label>
-    <label>Stock Quantity<input id="stock" type="number" min="0" value="0" class="mt-1 w-full border rounded-xl px-3 py-2"></label>
-    <label class="sm:col-span-2">Description<textarea id="description" rows="3" class="mt-1 w-full border rounded-xl px-3 py-2"></textarea></label>
-    <label class="sm:col-span-2">Image URL (optional)<input id="image_url" class="mt-1 w-full border rounded-xl px-3 py-2" placeholder="https://..."></label>
-    <label class="sm:col-span-2">Upload Image (optional)<input id="image_file" type="file" accept="image/*" class="mt-1 w-full border rounded-xl px-3 py-2"></label>
-    <div class="sm:col-span-2 flex flex-wrap gap-5">
-      <label><input id="available" type="checkbox" checked> Available</label>
-      <label><input id="popular" type="checkbox"> Popular</label>
-      <label><input id="featured" type="checkbox"> Featured</label>
-    </div>
-    <button class="sm:col-span-2 bg-[#3A2416] text-white rounded-xl py-3 font-semibold">Save Product</button>
-    <p id="formError" class="sm:col-span-2 text-red-600 text-sm"></p>
-  </form>
- </div>
+<div id="modal"
+class="hidden fixed inset-0 modal items-center justify-center p-4">
+
+<div class="bg-white rounded-3xl p-6 w-full max-w-2xl max-h-[92vh] overflow-auto">
+
+<div class="flex justify-between mb-5">
+
+<h2 id="modalTitle" class="text-xl font-bold">
+Add Product
+</h2>
+
+<button id="closeModal" class="text-2xl">×</button>
+
+</div>
+
+<form id="productForm" class="grid sm:grid-cols-2 gap-4">
+
+<input type="hidden" id="id">
+
+<label class="sm:col-span-2">
+Name
+<input id="name" required
+class="mt-1 w-full border rounded-xl px-3 py-2">
+</label>
+
+<label>
+Category
+<select id="category"
+class="mt-1 w-full border rounded-xl px-3 py-2">
+</select>
+</label>
+
+<label>
+Price (Rs.)
+<input id="price" type="number" min="0" required
+class="mt-1 w-full border rounded-xl px-3 py-2">
+</label>
+
+<label>
+Discount %
+<input id="discount" type="number" min="0" max="100" value="0"
+class="mt-1 w-full border rounded-xl px-3 py-2">
+</label>
+
+<label>
+Stock Quantity
+<input id="stock" type="number" min="0" value="0"
+class="mt-1 w-full border rounded-xl px-3 py-2">
+</label>
+
+<label class="sm:col-span-2">
+Description
+<textarea id="description" rows="3"
+class="mt-1 w-full border rounded-xl px-3 py-2"></textarea>
+</label>
+
+<label class="sm:col-span-2">
+Image URL (optional)
+<input id="image_url"
+class="mt-1 w-full border rounded-xl px-3 py-2"
+placeholder="https://...">
+</label>
+
+<label class="sm:col-span-2">
+Upload Image (optional)
+<input id="image_file"
+type="file"
+accept="image/*"
+class="mt-1 w-full border rounded-xl px-3 py-2">
+</label>
+
+<div class="sm:col-span-2 flex flex-wrap gap-5">
+
+<label>
+<input id="available" type="checkbox" checked>
+Available
+</label>
+
+<label>
+<input id="popular" type="checkbox">
+Popular
+</label>
+
+<label>
+<input id="featured" type="checkbox">
+Featured
+</label>
+
+</div>
+
+<button
+class="sm:col-span-2 bg-[#3A2416] text-white rounded-xl py-3 font-semibold">
+Save Product
+</button>
+
+<p id="formError"
+class="sm:col-span-2 text-red-600 text-sm"></p>
+
+</form>
+
+</div>
 </div>
 
 <script>
-const SUPABASE_URL="YOUR_SUPABASE_PROJECT_URL";
-const SUPABASE_PUBLISHABLE_KEY="YOUR_SUPABASE_PUBLISHABLE_KEY";
-const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
 
-const CATEGORIES=["Cakes","Pastries & Desserts","Bread & Buns","Bakery Items","Biscuits & Cookies","Donuts & Muffins","Pizza & Savouries","Snacks","Sweets & Mithai","Cold Drinks & Beverages","Juices & Milk","Dairy Products","Eggs","Rice & Flour","Daalain / Pulses","Cooking Oil & Ghee","Salt, Spices & Masalay","Sauces, Ketchup & Pickles","Tea & Coffee","Canned & Packaged Food","Chocolates & Candies","Breakfast Items / Cereals","Household / Cleaning Items","Personal Care","Daily Grocery","Offers / Deals","Other"];
+/* ================================
+   SUPABASE CONFIGURATION
+================================ */
 
-let products=[];
+const SUPABASE_URL =
+"https://rziajrwhyhlybuelkwgd.supabase.co";
 
-function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
-function isConfigured(){return !SUPABASE_URL.startsWith("YOUR_")&&!SUPABASE_PUBLISHABLE_KEY.startsWith("YOUR_")}
+/*
+  IMPORTANT:
+  Paste your Supabase PUBLISHABLE KEY between the quotes below.
+*/
+
+const SUPABASE_PUBLISHABLE_KEY =
+"sb_publishable_-jHp0n64Bl3HWv1GMkBsww_-4Lxd6UV";
+
+const sb =
+window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_PUBLISHABLE_KEY
+);
+
+
+/* ================================
+   CATEGORIES
+================================ */
+
+const CATEGORIES = [
+"Cakes",
+"Pastries & Desserts",
+"Bread & Buns",
+"Bakery Items",
+"Biscuits & Cookies",
+"Donuts & Muffins",
+"Pizza & Savouries",
+"Snacks",
+"Sweets & Mithai",
+"Cold Drinks & Beverages",
+"Juices & Milk",
+"Dairy Products",
+"Eggs",
+"Rice & Flour",
+"Daalain / Pulses",
+"Cooking Oil & Ghee",
+"Salt, Spices & Masalay",
+"Sauces, Ketchup & Pickles",
+"Tea & Coffee",
+"Canned & Packaged Food",
+"Chocolates & Candies",
+"Breakfast Items / Cereals",
+"Household / Cleaning Items",
+"Personal Care",
+"Daily Grocery",
+"Offers / Deals",
+"Other"
+];
+
+let products = [];
+
+
+/* ================================
+   HELPERS
+================================ */
+
+function esc(s){
+
+return String(s ?? "").replace(
+/[&<>"']/g,
+c => ({
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#39;"
+}[c])
+);
+
+}
+
+
+/* ================================
+   CONFIG CHECK
+================================ */
+
+function isConfigured(){
+
+return (
+SUPABASE_URL &&
+SUPABASE_PUBLISHABLE_KEY &&
+!SUPABASE_PUBLISHABLE_KEY.includes(
+"PASTE_YOUR"
+)
+);
+
+}
+
+
+/* ================================
+   ADMIN CHECK
+================================ */
 
 async function ensureAdmin(){
-  if(!isConfigured()){document.getElementById("loginError").textContent="Add your Supabase URL and publishable key in this file first.";return false}
-  const {data:{session}}=await sb.auth.getSession();
-  if(!session)return false;
-  const {data,error}=await sb.from("admin_users").select("user_id").eq("user_id",session.user.id).maybeSingle();
-  if(error||!data){await sb.auth.signOut();document.getElementById("loginError").textContent="This account is not registered as an admin.";return false}
-  document.getElementById("login").classList.add("hidden");document.getElementById("panel").classList.remove("hidden");await load();return true;
+
+if(!isConfigured()){
+
+document.getElementById("loginError").textContent =
+"Supabase publishable key is missing.";
+
+return false;
+
 }
+
+const {
+data:{session}
+} = await sb.auth.getSession();
+
+if(!session){
+
+return false;
+
+}
+
+const {
+data,
+error
+} = await sb
+.from("admin_users")
+.select("user_id")
+.eq("user_id",session.user.id)
+.maybeSingle();
+
+if(error || !data){
+
+await sb.auth.signOut();
+
+document.getElementById("loginError").textContent =
+"This account is not registered as an admin.";
+
+return false;
+
+}
+
+document.getElementById("login")
+.classList.add("hidden");
+
+document.getElementById("panel")
+.classList.remove("hidden");
+
+await load();
+
+return true;
+
+}
+
+
+/* ================================
+   LOAD PRODUCTS
+================================ */
+
 async function load(){
-  const {data,error}=await sb.from("products").select("*").order("created_at",{ascending:false});
-  if(error){alert(error.message);return}
-  products=data||[]; render(); await loadOrdersCount();
+
+const {
+data,
+error
+} = await sb
+.from("products")
+.select("*")
+.order("created_at",{ascending:false});
+
+if(error){
+
+alert(error.message);
+return;
+
 }
+
+products = data || [];
+
+render();
+
+await loadOrdersCount();
+
+}
+
+
+/* ================================
+   ORDERS
+================================ */
+
 async function loadOrdersCount(){
-  const {count}=await sb.from("orders").select("*",{count:"exact",head:true});
-  document.getElementById("sOrders").textContent=count??0;
+
+const {
+count
+} = await sb
+.from("orders")
+.select("*",{count:"exact",head:true});
+
+document.getElementById("sOrders").textContent =
+count ?? 0;
+
 }
+
+
+/* ================================
+   CATEGORIES
+================================ */
+
 function setupCats(){
-  const opts=CATEGORIES.map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join("");
-  document.getElementById("category").innerHTML=opts;
-  document.getElementById("filterCat").innerHTML='<option value="">All categories</option>'+opts;
+
+const opts =
+CATEGORIES
+.map(
+c => `<option value="${esc(c)}">${esc(c)}</option>`
+)
+.join("");
+
+document.getElementById("category").innerHTML =
+opts;
+
+document.getElementById("filterCat").innerHTML =
+'<option value="">All categories</option>' +
+opts;
+
 }
+
+
+/* ================================
+   RENDER
+================================ */
+
 function render(){
-  setupCats();
-  const q=document.getElementById("search").value.toLowerCase(), cat=document.getElementById("filterCat").value;
-  const list=products.filter(p=>(!q||p.name.toLowerCase().includes(q))&&(!cat||p.category===cat));
-  document.getElementById("rows").innerHTML=list.map(p=>`<tr class="border-t">
-    <td class="p-4"><div class="font-semibold">${esc(p.name)}</div><div class="text-xs text-gray-500">${esc(p.description||"")}</div></td>
-    <td class="p-4">${esc(p.category)}</td><td class="p-4">Rs. ${Number(p.price).toLocaleString()}</td>
-    <td class="p-4">${p.stock_quantity}</td><td class="p-4">${p.available?'<span class="text-green-700">Available</span>':'<span class="text-red-600">Hidden</span>'}</td>
-    <td class="p-4 text-right whitespace-nowrap"><button onclick="editProduct('${p.id}')" class="px-3 py-1 rounded-lg border mr-1">Edit</button><button onclick="deleteProduct('${p.id}')" class="px-3 py-1 rounded-lg bg-red-50 text-red-700">Delete</button></td>
-  </tr>`).join("")||'<tr><td colspan="6" class="p-8 text-center text-gray-500">No products.</td></tr>';
-  document.getElementById("sProducts").textContent=products.length;
-  document.getElementById("sCats").textContent=new Set(products.map(p=>p.category)).size;
-  document.getElementById("sStock").textContent=products.filter(p=>p.available&&p.stock_quantity>0).length;
+
+setupCats();
+
+const q =
+document
+.getElementById("search")
+.value
+.toLowerCase();
+
+const cat =
+document.getElementById("filterCat").value;
+
+const list =
+products.filter(
+p =>
+(!q || p.name.toLowerCase().includes(q)) &&
+(!cat || p.category === cat)
+);
+
+document.getElementById("rows").innerHTML =
+list.map(
+p => `
+
+<tr class="border-t">
+
+<td class="p-4">
+
+<div class="font-semibold">
+${esc(p.name)}
+</div>
+
+<div class="text-xs text-gray-500">
+${esc(p.description || "")}
+</div>
+
+</td>
+
+<td class="p-4">
+${esc(p.category)}
+</td>
+
+<td class="p-4">
+Rs. ${Number(p.price).toLocaleString()}
+</td>
+
+<td class="p-4">
+${p.stock_quantity ?? 0}
+</td>
+
+<td class="p-4">
+
+${
+p.available
+?
+'<span class="text-green-700">Available</span>'
+:
+'<span class="text-red-600">Hidden</span>'
 }
+
+</td>
+
+<td class="p-4 text-right whitespace-nowrap">
+
+<button
+onclick="editProduct('${p.id}')"
+class="px-3 py-1 rounded-lg border mr-1">
+Edit
+</button>
+
+<button
+onclick="deleteProduct('${p.id}')"
+class="px-3 py-1 rounded-lg bg-red-50 text-red-700">
+Delete
+</button>
+
+</td>
+
+</tr>
+
+`
+).join("")
+||
+'<tr><td colspan="6" class="p-8 text-center text-gray-500">No products.</td></tr>';
+
+document.getElementById("sProducts").textContent =
+products.length;
+
+document.getElementById("sCats").textContent =
+new Set(products.map(p => p.category)).size;
+
+document.getElementById("sStock").textContent =
+products.filter(
+p => p.available && Number(p.stock_quantity) > 0
+).length;
+
+}
+
+
+/* ================================
+   PRODUCT MODAL
+================================ */
+
 function openModal(p=null){
-  document.getElementById("modalTitle").textContent=p?"Edit Product":"Add Product";
-  document.getElementById("id").value=p?.id||"";
-  document.getElementById("name").value=p?.name||"";
-  document.getElementById("category").value=p?.category||CATEGORIES[0];
-  document.getElementById("price").value=p?.price??"";
-  document.getElementById("discount").value=p?.discount_percent??0;
-  document.getElementById("stock").value=p?.stock_quantity??0;
-  document.getElementById("description").value=p?.description||"";
-  document.getElementById("image_url").value=p?.image_url||"";
-  document.getElementById("image_file").value="";
-  document.getElementById("available").checked=p?.available!==false;
-  document.getElementById("popular").checked=!!p?.popular;
-  document.getElementById("featured").checked=!!p?.featured;
-  document.getElementById("formError").textContent="";
-  document.getElementById("modal").classList.remove("hidden");document.getElementById("modal").classList.add("flex");
+
+document.getElementById("modalTitle").textContent =
+p ? "Edit Product" : "Add Product";
+
+document.getElementById("id").value =
+p?.id || "";
+
+document.getElementById("name").value =
+p?.name || "";
+
+document.getElementById("category").value =
+p?.category || CATEGORIES[0];
+
+document.getElementById("price").value =
+p?.price ?? "";
+
+document.getElementById("discount").value =
+p?.discount_percent ?? 0;
+
+document.getElementById("stock").value =
+p?.stock_quantity ?? 0;
+
+document.getElementById("description").value =
+p?.description || "";
+
+document.getElementById("image_url").value =
+p?.image_url || "";
+
+document.getElementById("image_file").value =
+"";
+
+document.getElementById("available").checked =
+p?.available !== false;
+
+document.getElementById("popular").checked =
+!!p?.popular;
+
+document.getElementById("featured").checked =
+!!p?.featured;
+
+document.getElementById("formError").textContent =
+"";
+
+document.getElementById("modal")
+.classList.remove("hidden");
+
+document.getElementById("modal")
+.classList.add("flex");
+
 }
-function closeModal(){document.getElementById("modal").classList.add("hidden");document.getElementById("modal").classList.remove("flex")}
-window.editProduct=id=>openModal(products.find(p=>p.id===id));
-window.deleteProduct=async id=>{
-  const p=products.find(x=>x.id===id);if(!p||!confirm(`Delete ${p.name}?`))return;
-  const {error}=await sb.from("products").delete().eq("id",id);if(error)alert(error.message);else load();
+
+
+function closeModal(){
+
+document.getElementById("modal")
+.classList.add("hidden");
+
+document.getElementById("modal")
+.classList.remove("flex");
+
 }
+
+
+/* ================================
+   EDIT
+================================ */
+
+window.editProduct = id =>
+openModal(
+products.find(p => p.id === id)
+);
+
+
+/* ================================
+   DELETE
+================================ */
+
+window.deleteProduct = async id => {
+
+const p =
+products.find(x => x.id === id);
+
+if(
+!p ||
+!confirm(`Delete ${p.name}?`)
+)
+return;
+
+const {
+error
+} =
+await sb
+.from("products")
+.delete()
+.eq("id",id);
+
+if(error){
+
+alert(error.message);
+
+}else{
+
+await load();
+
+}
+
+};
+
+
+/* ================================
+   IMAGE UPLOAD
+================================ */
+
 async function uploadImage(file){
-  if(!file)return null;
-  const safe=file.name.toLowerCase().replace(/[^a-z0-9._-]/g,"-");
-  const path=`products/${crypto.randomUUID()}-${safe}`;
-  const {error}=await sb.storage.from("product-images").upload(path,file,{cacheControl:"3600",upsert:false});
-  if(error)throw error;
-  const {data}=sb.storage.from("product-images").getPublicUrl(path);
-  return data.publicUrl;
+
+if(!file)
+return null;
+
+const safe =
+file.name
+.toLowerCase()
+.replace(/[^a-z0-9._-]/g,"-");
+
+const path =
+`products/${crypto.randomUUID()}-${safe}`;
+
+const {
+error
+} =
+await sb
+.storage
+.from("product-images")
+.upload(
+path,
+file,
+{
+cacheControl:"3600",
+upsert:false
 }
-document.getElementById("productForm").addEventListener("submit",async e=>{
-  e.preventDefault();
-  const err=document.getElementById("formError");err.textContent="";
-  try{
-    const id=document.getElementById("id").value;
-    let image=document.getElementById("image_url").value.trim();
-    const file=document.getElementById("image_file").files[0]; if(file) image=await uploadImage(file);
-    const row={name:document.getElementById("name").value.trim(),category:document.getElementById("category").value,description:document.getElementById("description").value.trim(),price:Number(document.getElementById("price").value),discount_percent:Number(document.getElementById("discount").value||0),stock_quantity:Number(document.getElementById("stock").value||0),image_url:image,available:document.getElementById("available").checked,popular:document.getElementById("popular").checked,featured:document.getElementById("featured").checked,updated_at:new Date().toISOString()};
-    const result=id?await sb.from("products").update(row).eq("id",id):await sb.from("products").insert(row);
-    if(result.error)throw result.error;closeModal();await load();
-  }catch(x){err.textContent=x.message}
+);
+
+if(error)
+throw error;
+
+const {
+data
+} =
+sb
+.storage
+.from("product-images")
+.getPublicUrl(path);
+
+return data.publicUrl;
+
+}
+
+
+/* ================================
+   SAVE PRODUCT
+================================ */
+
+document
+.getElementById("productForm")
+.addEventListener(
+"submit",
+async e => {
+
+e.preventDefault();
+
+const err =
+document.getElementById("formError");
+
+err.textContent = "";
+
+try{
+
+const id =
+document.getElementById("id").value;
+
+let image =
+document
+.getElementById("image_url")
+.value
+.trim();
+
+const file =
+document
+.getElementById("image_file")
+.files[0];
+
+if(file)
+image = await uploadImage(file);
+
+const row = {
+
+name:
+document
+.getElementById("name")
+.value
+.trim(),
+
+category:
+document
+.getElementById("category")
+.value,
+
+description:
+document
+.getElementById("description")
+.value
+.trim(),
+
+price:
+Number(
+document
+.getElementById("price")
+.value
+),
+
+discount_percent:
+Number(
+document
+.getElementById("discount")
+.value || 0
+),
+
+stock_quantity:
+Number(
+document
+.getElementById("stock")
+.value || 0
+),
+
+image_url:
+image,
+
+available:
+document
+.getElementById("available")
+.checked,
+
+popular:
+document
+.getElementById("popular")
+.checked,
+
+featured:
+document
+.getElementById("featured")
+.checked,
+
+updated_at:
+new Date().toISOString()
+
+};
+
+const result =
+id
+
+?
+await sb
+.from("products")
+.update(row)
+.eq("id",id)
+
+:
+
+await sb
+.from("products")
+.insert(row);
+
+if(result.error)
+throw result.error;
+
+closeModal();
+
+await load();
+
+}catch(x){
+
+err.textContent =
+x.message;
+
+}
+
+}
+);
+
+
+/* ================================
+   LOGIN
+================================ */
+
+document
+.getElementById("loginForm")
+.addEventListener(
+"submit",
+async e => {
+
+e.preventDefault();
+
+const loginError =
+document.getElementById("loginError");
+
+loginError.textContent = "";
+
+if(!isConfigured()){
+
+loginError.textContent =
+"Supabase publishable key is missing.";
+
+return;
+
+}
+
+const emailValue =
+document
+.getElementById("email")
+.value
+.trim();
+
+const passwordValue =
+document
+.getElementById("password")
+.value;
+
+const {
+error
+} =
+await sb.auth.signInWithPassword({
+
+email:emailValue,
+
+password:passwordValue
+
 });
-document.getElementById("loginForm").addEventListener("submit",async e=>{
-  e.preventDefault();document.getElementById("loginError").textContent="";
-  const {error}=await sb.auth.signInWithPassword({email:email.value,password:password.value});
-  if(error){document.getElementById("loginError").textContent=error.message;return}
-  ensureAdmin();
-});
-document.getElementById("logout").onclick=async()=>{await sb.auth.signOut();location.reload()};
-document.getElementById("addBtn").onclick=()=>openModal();
-document.getElementById("closeModal").onclick=closeModal;
-document.getElementById("refreshBtn").onclick=load;
-document.getElementById("search").oninput=render;document.getElementById("filterCat").onchange=render;
-setupCats();ensureAdmin();
+
+if(error){
+
+loginError.textContent =
+error.message;
+
+return;
+
+}
+
+await ensureAdmin();
+
+}
+);
+
+
+/* ================================
+   LOGOUT
+================================ */
+
+document
+.getElementById("logout")
+.onclick =
+async () => {
+
+await sb.auth.signOut();
+
+location.reload();
+
+};
+
+
+/* ================================
+   BUTTONS
+================================ */
+
+document
+.getElementById("addBtn")
+.onclick =
+() => openModal();
+
+document
+.getElementById("closeModal")
+.onclick =
+closeModal;
+
+document
+.getElementById("refreshBtn")
+.onclick =
+load;
+
+document
+.getElementById("search")
+.oninput =
+render;
+
+document
+.getElementById("filterCat")
+.onchange =
+render;
+
+
+/* ================================
+   START
+================================ */
+
+setupCats();
+
+ensureAdmin();
+
 </script>
+
 </body>
 </html>
