@@ -473,8 +473,13 @@ function render(){
 }
 window.addEventListener('hashchange', render);
 document.getElementById('menuToggle').addEventListener('click', ()=>document.getElementById('mobileNav').classList.toggle('hidden'));
-setInterval(()=>{ if((location.hash.replace('#/','')||'home')==='home' || (location.hash.replace('#/','')||'')==='contact') render(); }, 60000);
+setInterval(()=>{ 
+  if((location.hash.replace('#/','')||'home')==='home' || 
+     (location.hash.replace('#/','')||'')==='contact') render(); 
+}, 60000);
+
 render();
+loadProductsFromSupabase();
 </script>
 </body>
 </html>
